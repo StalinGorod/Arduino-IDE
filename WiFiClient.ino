@@ -8,6 +8,8 @@ ESP8266WebServer server(80);
 
 void setup() {
   Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digtalWrite(LED_BUILTIN, HIGH);
 
   Serial.println();
   Serial.println();
@@ -34,13 +36,14 @@ void setup() {
     </style>\
     </head>\
     <body>\
-    <h2>Selamat Datang</h2>\
-    <a href='/'>Beranda</a> | <a href='/profil'>Profil</a>\ 
+    <h2>LED Sedang ON</h2>\
+    <a href='/'>ON</a> | <a href='/off'>OFF</a>\ 
     </body>\
     </html>");
+    digtalWrite(LED_BUILTIN, LOW);
   });
 
-   server.on("/profil", [](){
+   server.on("/off", [](){
     server.send(200, "text/html", "<html>\
     <head>\
     <title>Profil</title>\
@@ -49,10 +52,11 @@ void setup() {
     </style>\
     </head>\
     <body>\
-    <h2>Ini Halaman Profil</h2>\
-    <a href='/'>Beranda</a>\
+    <h2>LED Sedang OFF</h2>\
+    <a href='/'>ON</a> | <a href='/off'>OFF</a>\ 
     </body>\
     </html>");
+    digtalWrite(LED_BUILTIN, HIGH);
   });
 
   server.begin();
